@@ -1,0 +1,44 @@
+#!/bin/bash
+
+display_usage() {
+    echo -e "\nUsage: $0 <project name> [npm discord wrapper name]"
+}
+
+if [ $# -eq 0 ]
+then
+    display_usage
+    exit 1
+fi
+
+if [[ $1 == "--help" || $1 == "-h" ]]
+then
+    display_usage
+    exit 0
+fi 
+
+project_name="$1"
+
+echo -e "> create dir -> $project_name \n"
+mkdir $project_name
+
+echo -e "> change dir -> $project_name \n"
+cd $project_name
+
+echo -e "> init git repo\n"
+git init
+
+echo -e "> init npm project with defaults\n"
+npm init -y && 
+
+echo -e "> install discord.js discord.js-commando dotenv sqlite sqlite3\n" &&
+npm i discord.js discord.js-commando dotenv sqlite sqlite3 &&
+
+echo -e "> install eslint nodemon as devDeps\n" &&
+npm i eslint nodemon -D &&
+
+echo -e "> create jsconfig" &&
+npx jsconfig.json -t node -m commonJS &&
+
+ echo -e "Project init complete. Make sure to run 'npx eslint --init'\n"
+
+exit 0
